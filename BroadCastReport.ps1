@@ -27,6 +27,24 @@ function init
 	$tempFolderLocation = Read-Host "Folder Path of Temp Location of Reports. Don't put in Mexico's SAP or XFER location."
 	
 	
+	$a = new-object -comobject wscript.shell
+	$msg = "Do you want proceed with running the Broadcast scripts using the following data?"
+	$msg = $msg + "`r`n	$tempFolderLocation"
+	$msg = $msg + "`r`n	Year Folder: $year"
+	$msg = $msg + "`r`n	Month Folder: $month"
+	$intAnswer = $a.popup($msg, 0, "Broadcast Report Finalize Script", 4)
+	If ($intAnswer -eq 6)
+	{
+		$a.popup("Proceeding with script to modify locations of reports.")
+	}
+	else
+	{
+		$a.popup("Script has been canceled - no change has occurred.")
+		Exit
+	}
+	
+	
+	
 	$log = $(get-date -f yyyy-MM-dd)
 	$log = "$tempFolderLocation\LOG $year-$month.txt"
 	
